@@ -2,9 +2,9 @@ const express = require("express");
 const transactionRouter = express.Router();
 const transaction = require("../services/transactionService.js");
 
-transactionRouter.get("/", async (req, res) => {
-  res.send("OKKKK ");
-});
+// transactionRouter.get("/", async (req, res) => {
+//   res.send("OKKKK ");
+// });
 
 transactionRouter.post("/", async (req, res) => {
   const {
@@ -32,9 +32,15 @@ transactionRouter.post("/", async (req, res) => {
   res.send(data);
 });
 
-transactionRouter.get("/:period", async (req, res) => {
-  let period = req.params.period;
+transactionRouter.get("/", async (req, res) => {
+  let period = req.query.period;
   const data = await transaction.findAll(period);
+  res.send(data);
+});
+
+transactionRouter.get("/:id", async (req, res) => {
+  let id = req.params.id;
+  const data = await transaction.findOne(id);
   res.send(data);
 });
 

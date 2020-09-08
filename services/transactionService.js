@@ -57,6 +57,15 @@ async function findAll(period) {
   return data;
 }
 
+async function findOne(id) {
+  try {
+    const data = await TransactionModel.findById({ _id: id });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function remove(id) {
   try {
     const data = await TransactionModel.findByIdAndRemove({ _id: id });
@@ -66,4 +75,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { create, findAll, remove };
+module.exports = { create, findAll, findOne, remove };
