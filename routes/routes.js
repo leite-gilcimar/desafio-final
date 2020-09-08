@@ -2,10 +2,6 @@ const express = require("express");
 const transactionRouter = express.Router();
 const transaction = require("../services/transactionService.js");
 
-// transactionRouter.get("/", async (req, res) => {
-//   res.send("OKKKK ");
-// });
-
 transactionRouter.post("/", async (req, res) => {
   const {
     description,
