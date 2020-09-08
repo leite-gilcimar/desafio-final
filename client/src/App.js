@@ -33,7 +33,10 @@ export default function App() {
         <h1 className="center">Desafio Final do Bootcamp Full Stack</h1>
         <h4 className="center">Controle Financeiro Pessoal</h4>
         <Months period={handleSetPeriod} />
-        <Transactions transactions={transactions} />
+        <Transactions
+          lengthTransaction={lengthTransaction}
+          transactions={transactions}
+        />
       </div>
     </div>
   );
