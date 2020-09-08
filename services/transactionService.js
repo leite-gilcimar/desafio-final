@@ -66,6 +66,17 @@ async function findOne(id) {
   }
 }
 
+async function update(id, data) {
+  try {
+    data = await TransactionModel.findByIdAndUpdate({ _id: id }, data, {
+      new: true,
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function remove(id) {
   try {
     const data = await TransactionModel.findByIdAndRemove({ _id: id });
@@ -75,4 +86,4 @@ async function remove(id) {
   }
 }
 
-module.exports = { create, findAll, findOne, remove };
+module.exports = { create, findAll, findOne, update, remove };

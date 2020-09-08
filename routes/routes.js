@@ -35,13 +35,28 @@ transactionRouter.post("/", async (req, res) => {
 transactionRouter.get("/", async (req, res) => {
   let period = req.query.period;
   const data = await transaction.findAll(period);
-  res.send(data);
+  let transactionsLength = data.reduce((accumulator, currentItem) => {
+    return accumulator + 1;
+  }, 0);
+  const transactions = {
+    length: transactionsLength,
+    transactions: data,
+  };
+  res.send(transactions);
 });
 
 transactionRouter.get("/:id", async (req, res) => {
   let id = req.params.id;
   const data = await transaction.findOne(id);
   res.send(data);
+});
+
+transactionRouter.put("/:id", async (req, res) => {
+  if (req.body) {
+    const id = req.params.id;
+    const data = await transaction.update(id, req.body);
+    res.send(data);
+  }
 });
 
 transactionRouter.delete("/:id", async (req, res) => {
