@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <div>
-      <div>
+      <div className="container">
         <h1 className="center">Desafio Final do Bootcamp Full Stack</h1>
         <h4 className="center">Controle Financeiro Pessoal</h4>
         <Months period={handleSetPeriod} />

@@ -5,9 +5,11 @@ export default function Transactions({ transactions, lengthTransaction }) {
 
   return (
     <div>
-      <div>Lançamentos: {lengthTransaction}</div>
       <div>
-        <table className="striped">
+        <span>Lançamentos: {lengthTransaction}</span>
+      </div>
+      <div>
+        <table style={styles.table} className="centered">
           <thead>
             <tr>
               <th>Dia</th>
@@ -33,16 +35,29 @@ export default function Transactions({ transactions, lengthTransaction }) {
                 _id,
               }) => {
                 return (
-                  <tr key={_id}>
+                  <tr
+                    key={_id}
+                    style={type === "-" ? styles.expense : styles.profit}
+                  >
                     <td>{day}</td>
                     <td>{category}</td>
                     <td>{description}</td>
                     <td>R$ {value.toFixed(2)}</td>
                     <td>
-                      <span className="material-icons">edit</span>
+                      <span
+                        className="material-icons"
+                        style={{ cursor: "pointer" }}
+                      >
+                        edit
+                      </span>
                     </td>
                     <td>
-                      <span className="material-icons">delete</span>
+                      <span
+                        className="material-icons"
+                        style={{ cursor: "pointer" }}
+                      >
+                        delete
+                      </span>
                     </td>
                   </tr>
                 );
@@ -54,3 +69,16 @@ export default function Transactions({ transactions, lengthTransaction }) {
     </div>
   );
 }
+
+const styles = {
+  expense: {
+    backgroundColor: "#FE7E7E",
+  },
+  profit: {
+    backgroundColor: "#7fffd4",
+  },
+  table: {
+    border: "1px solid lightgrey",
+    borderRadius: "10px",
+  },
+};
