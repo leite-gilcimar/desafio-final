@@ -34,6 +34,7 @@ transactionRouter.get("/", async (req, res) => {
   let transactionsLength = data.reduce((accumulator, currentItem) => {
     return accumulator + 1;
   }, 0);
+
   const transactions = {
     length: transactionsLength,
     transactions: data,

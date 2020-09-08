@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Months() {
+export default function Months({ period }) {
   const years = ["2019", "2020", "2021"];
   const months = [];
   for (let y = 0; y < years.length; y++) {
@@ -13,11 +13,14 @@ export default function Months() {
     }
   }
 
-  console.log(months);
+  const handlePeriodChange = (event) => {
+    console.log(event.target.value);
+    period(event.target.value);
+  };
 
   return (
     <div>
-      <select className="browser-default">
+      <select className="browser-default" onChange={handlePeriodChange}>
         {months.map((month, index) => {
           return <option key={index}>{month}</option>;
         })}
