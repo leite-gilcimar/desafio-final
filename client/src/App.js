@@ -73,6 +73,10 @@ export default function App() {
     setIsModalOpen(true);
   };
 
+  const handleCloseNewTransaction = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <div className="container">
@@ -90,7 +94,9 @@ export default function App() {
           lengthTransaction={lengthTransaction}
           transactions={filteredTransactions}
         />
-        {isModalOpen && <ModalTransaction />}
+        {isModalOpen && (
+          <ModalTransaction onClose={handleCloseNewTransaction} />
+        )}
       </div>
     </div>
   );
