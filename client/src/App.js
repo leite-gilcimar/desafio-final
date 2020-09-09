@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Months from "./components/Months";
 import Transactions from "./components/Transactions";
+import NewTransaction from "./components/NewTransaction";
 
 export default function App() {
   const [transactions, setTransactions] = React.useState([]);
@@ -54,6 +55,7 @@ export default function App() {
         <h1 className="center">Desafio Final do Bootcamp Full Stack</h1>
         <h4 className="center">Controle Financeiro Pessoal</h4>
         <Months period={handleSetPeriod} />
+        <NewTransaction />
         <Transactions
           profit={profit}
           expense={expense}
@@ -65,3 +67,10 @@ export default function App() {
     </div>
   );
 }
+
+const styles = {
+  rows: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+};
