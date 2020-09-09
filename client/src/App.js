@@ -3,6 +3,7 @@ import axios from "axios";
 import Months from "./components/Months";
 import Transactions from "./components/Transactions";
 import NewTransaction from "./components/NewTransaction";
+import ModalTransaction from "./components/ModalTransaction";
 
 export default function App() {
   const [transactions, setTransactions] = React.useState([]);
@@ -12,6 +13,7 @@ export default function App() {
   const [expense, setExpense] = React.useState(0);
   const [balance, setBalance] = React.useState(0);
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     const getTransactions = async () => {
@@ -67,13 +69,20 @@ export default function App() {
     setFilteredTransactions(filtered);
   };
 
+  const handleNewTransaction = (transaction) => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
       <div className="container">
         <h1 className="center">Desafio Final do Bootcamp Full Stack</h1>
         <h4 className="center">Controle Financeiro Pessoal</h4>
         <Months period={handleSetPeriod} />
-        <NewTransaction handleFilter={handleFilterInput} />
+        <NewTransaction
+          handleFilter={handleFilterInput}
+          handleNewTransaction={handleNewTransaction}
+        />
         <Transactions
           profit={profit}
           expense={expense}
@@ -81,6 +90,7 @@ export default function App() {
           lengthTransaction={lengthTransaction}
           transactions={filteredTransactions}
         />
+        {isModalOpen && <ModalTransaction />}
       </div>
     </div>
   );

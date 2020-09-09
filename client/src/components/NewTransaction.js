@@ -1,13 +1,22 @@
 import React from "react";
 
-export default function NewTransaction({ handleFilter }) {
+export default function NewTransaction({ handleFilter, handleNewTransaction }) {
   const handleInput = (event) => {
     handleFilter(event.target.value);
   };
 
+  const handleClick = () => {
+    console.log("click");
+    handleNewTransaction("opa");
+  };
+
   return (
     <div style={styles.filter}>
-      <button className="waves-effect waves-light btn" style={styles.button}>
+      <button
+        className="waves-light btn-small"
+        style={styles.button}
+        onClick={handleClick}
+      >
         + NOVO LANÇAMENTO
       </button>
       <input
