@@ -20,26 +20,9 @@ export default function App() {
       );
       const { data } = result;
       const { length, transactions } = data;
-      const profit = transactions.reduce((accumulator, currentItem) => {
-        if (currentItem.type === "+") {
-          accumulator = accumulator + currentItem.value;
-        }
-        return accumulator;
-      }, 0);
-      const balance = transactions.reduce((accumulator, currentItem) => {
-        if (currentItem.type === "-") {
-          accumulator -= currentItem.value;
-        }
-        return accumulator;
-      }, profit);
 
-      const expense = balance - profit;
-
-      setProfit(profit);
-      setExpense(expense);
-      setBalance(balance);
-      setLengthTransaction(length);
       setTransactions(transactions);
+      setLengthTransaction(length);
       setFilteredTransactions(Object.assign([], transactions));
       setPeriod(period);
     };
