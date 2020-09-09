@@ -1,12 +1,36 @@
 import React from "react";
 
-export default function Transactions({ transactions, lengthTransaction }) {
+export default function Transactions({
+  transactions,
+  lengthTransaction,
+  profit,
+  expense,
+  balance,
+}) {
   console.log(transactions);
 
   return (
     <div>
-      <div>
-        <span>Lançamentos: {lengthTransaction}</span>
+      <div style={styles.resume}>
+        <div style={{ width: "30%" }}>Lançamentos: {lengthTransaction}</div>
+        <div style={{ width: "30%" }}>
+          Receitas:{" "}
+          <span style={{ fontWeight: "bold", color: "#7fffd4" }}>
+            R$ {profit.toFixed(2)}
+          </span>
+        </div>
+        <div style={{ width: "30%" }}>
+          Despesas:{" "}
+          <span style={{ fontWeight: "bold", color: "#FE7E7E" }}>
+            R$ {expense.toFixed(2)}
+          </span>
+        </div>
+        <div style={{ width: "30%" }}>
+          Saldo:{" "}
+          <span style={{ fontWeight: "bold", color: "#7fffd4" }}>
+            R$ {balance.toFixed(2)}
+          </span>
+        </div>
       </div>
       <div>
         <table style={styles.table} className="centered">
@@ -80,5 +104,13 @@ const styles = {
   table: {
     border: "1px solid lightgrey",
     borderRadius: "10px",
+  },
+  resume: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    padding: "15px",
+    marging: "15px",
+    border: "1px solid lightgrey",
   },
 };
