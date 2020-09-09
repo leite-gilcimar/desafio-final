@@ -15,19 +15,21 @@ export default function Transactions({
         <div style={{ width: "30%" }}>Lançamentos: {lengthTransaction}</div>
         <div style={{ width: "30%" }}>
           Receitas:{" "}
-          <span style={{ fontWeight: "bold", color: "#7fffd4" }}>
-            R$ {profit.toFixed(2)}
-          </span>
+          <span style={styles.moneyColorPositive}>R$ {profit.toFixed(2)}</span>
         </div>
         <div style={{ width: "30%" }}>
           Despesas:{" "}
-          <span style={{ fontWeight: "bold", color: "#FE7E7E" }}>
-            R$ {expense.toFixed(2)}
-          </span>
+          <span style={styles.moneyColorNegative}>R$ {expense.toFixed(2)}</span>
         </div>
         <div style={{ width: "30%" }}>
           Saldo:{" "}
-          <span style={{ fontWeight: "bold", color: "#7fffd4" }}>
+          <span
+            style={
+              balance >= 0
+                ? styles.moneyColorPositive
+                : styles.moneyColorNegative
+            }
+          >
             R$ {balance.toFixed(2)}
           </span>
         </div>
@@ -112,5 +114,13 @@ const styles = {
     padding: "15px",
     marging: "15px",
     border: "1px solid lightgrey",
+  },
+  moneyColorPositive: {
+    fontWeight: "bold",
+    color: "#7fffd4",
+  },
+  moneyColorNegative: {
+    fontWeight: "bold",
+    color: "#FE7E7E",
   },
 };
