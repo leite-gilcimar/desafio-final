@@ -5,7 +5,12 @@ import axios from "axios";
 
 Modal.setAppElement("#root");
 
-export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
+export default function ModalTransaction({
+  editTransaction,
+  isEdit,
+  onClose,
+  handleDataTransactions,
+}) {
   const initTransaction = {
     _id: null,
     description: "",
@@ -53,8 +58,9 @@ export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
         newTransaction
       );
     }
-
     console.log(result);
+    onClose();
+    handleDataTransactions(newTransaction);
   };
 
   const handleChange = (event) => {

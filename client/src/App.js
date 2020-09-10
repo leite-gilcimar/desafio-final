@@ -7,7 +7,7 @@ import ModalTransaction from "./components/ModalTransaction";
 
 export default function App() {
   const [transactions, setTransactions] = React.useState([]);
-  const [period, setPeriod] = React.useState("2020-08");
+  const [period, setPeriod] = React.useState("2019-01");
   const [lengthTransaction, setLengthTransaction] = React.useState(0);
   const [profit, setProfit] = React.useState(0);
   const [expense, setExpense] = React.useState(0);
@@ -85,6 +85,19 @@ export default function App() {
     setIsModalOpen(true);
   };
 
+  const handleDataTransactions = (transaction) => {
+    const newFilteredTransactions = filteredTransactions.filter(
+      (transactionItem) => {
+        return transactionItem._id !== transaction._id;
+      }
+    );
+    newFilteredTransactions.push(transaction);
+    newFilteredTransactions.sort((a, b) => {
+      return a._id.localeCompare(b._id);
+    });
+    setFilteredTransactions(newFilteredTransactions);
+  };
+
   return (
     <div>
       <div className="container">
@@ -108,6 +121,7 @@ export default function App() {
             editTransaction={editTransaction}
             isEdit={isEdit}
             onClose={handleCloseNewTransaction}
+            handleDataTransactions={handleDataTransactions}
           />
         )}
       </div>

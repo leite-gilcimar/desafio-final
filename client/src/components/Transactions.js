@@ -19,17 +19,25 @@ export default function Transactions({
     //console.log(findTransaction);
   };
 
+  const formatMonetary = new Intl.NumberFormat("pt-BR", {
+    minimumFractionDigits: 2,
+  });
+
   return (
     <div>
       <div style={styles.resume}>
         <div style={{ width: "30%" }}>Lançamentos: {lengthTransaction}</div>
         <div style={{ width: "30%" }}>
           Receitas:{" "}
-          <span style={styles.moneyColorPositive}>R$ {profit.toFixed(2)}</span>
+          <span style={styles.moneyColorPositive}>
+            R$ {formatMonetary.format(profit)}
+          </span>
         </div>
         <div style={{ width: "30%" }}>
           Despesas:{" "}
-          <span style={styles.moneyColorNegative}>R$ {expense.toFixed(2)}</span>
+          <span style={styles.moneyColorNegative}>
+            R$ {formatMonetary.format(expense)}
+          </span>
         </div>
         <div style={{ width: "30%" }}>
           Saldo:{" "}
@@ -40,7 +48,7 @@ export default function Transactions({
                 : styles.moneyColorNegative
             }
           >
-            R$ {balance.toFixed(2)}
+            R$ {formatMonetary.format(balance)}
           </span>
         </div>
       </div>
@@ -78,7 +86,7 @@ export default function Transactions({
                     <td>{day}</td>
                     <td>{category}</td>
                     <td>{description}</td>
-                    <td>R$ {value.toFixed(2)}</td>
+                    <td>R$ {formatMonetary.format(value)}</td>
                     <td>
                       <Action
                         onActionClick={handleActionClick}
