@@ -8,13 +8,19 @@ export default function Transactions({
   expense,
   balance,
   onPersist,
+  onDelete,
 }) {
   console.log(transactions);
 
   const handleActionClick = (id, type) => {
+    console.log("Type: " + type);
     const findTransaction = transactions.find((transaction) => {
       return transaction._id === id;
     });
+    if (type === "delete") {
+      onDelete(findTransaction);
+      return;
+    }
     onPersist(findTransaction);
     //console.log(findTransaction);
   };
@@ -95,12 +101,11 @@ export default function Transactions({
                       />
                     </td>
                     <td>
-                      <span
-                        className="material-icons"
-                        style={{ cursor: "pointer" }}
-                      >
-                        delete
-                      </span>
+                      <Action
+                        onActionClick={handleActionClick}
+                        id={_id}
+                        type="delete"
+                      />
                     </td>
                   </tr>
                 );

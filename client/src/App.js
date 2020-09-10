@@ -87,17 +87,32 @@ export default function App() {
   };
 
   const handleDataTransactions = (transaction) => {
+    handleOrganizeTransaction(transaction, "edit");
+    setIsEdit(false);
+  };
+
+  const handleDelete = async (transaction) => {
+    const result = await axios.delete(
+      `http://localhost:3001/api/transaction/${transaction._id}`
+    );
+
+    handleOrganizeTransaction(transaction, "delete");
+    console.log(result);
+  };
+
+  const handleOrganizeTransaction = (transaction, action) => {
     const newFilteredTransactions = filteredTransactions.filter(
       (transactionItem) => {
         return transactionItem._id !== transaction._id;
       }
     );
-    newFilteredTransactions.push(transaction);
+    if (action !== "delete") {
+      newFilteredTransactions.push(transaction);
+    }
     newFilteredTransactions.sort((a, b) => {
       return a._id.localeCompare(b._id);
     });
     setFilteredTransactions(newFilteredTransactions);
-    setIsEdit(false);
   };
 
   return (
@@ -117,6 +132,7 @@ export default function App() {
           lengthTransaction={lengthTransaction}
           transactions={filteredTransactions}
           onPersist={handlePersist}
+          onDelete={handleDelete}
         />
         {isModalOpen && (
           <ModalTransaction
