@@ -6,19 +6,6 @@ import axios from "axios";
 Modal.setAppElement("#root");
 
 export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
-  const {
-    _id,
-    description,
-    value,
-    category,
-    year,
-    month,
-    day,
-    yearMonth,
-    yearMonthDay,
-    type,
-  } = editTransaction;
-
   const initTransaction = {
     _id: null,
     description: "",
@@ -32,26 +19,40 @@ export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
     type: "",
   };
 
-  const [selectedOption, setSelectedOption] = React.useState("despesa");
+  const [selectedOption, setSelectedOption] = React.useState("");
   const [newTransaction, setNewTransaction] = React.useState(initTransaction);
+  const [edit, setEdit] = React.useState(true);
+  const [radioDisable, setRadioDisable] = React.useState(false);
 
-  // if (isEdit) {
-  //   setNewTransaction(editTransaction);
-
-  //   console.log(editTransaction);
-  // }
+  const {
+    _id,
+    description,
+    value,
+    category,
+    year,
+    month,
+    day,
+    yearMonth,
+    yearMonthDay,
+    type,
+  } = newTransaction;
 
   const handleFormSubmit = async (event) => {
-    // if (isEdit) {
-    //   newTransaction._id = _id;
-    //   console.log(_id);
-    // }
-
     event.preventDefault();
-    const result = await axios.post(
-      "http://localhost:3001/api/transaction/",
-      newTransaction
-    );
+
+    let result = null;
+
+    if (isEdit) {
+      result = await axios.put(
+        `http://localhost:3001/api/transaction/${newTransaction._id}`,
+        newTransaction
+      );
+    } else {
+      result = await axios.post(
+        "http://localhost:3001/api/transaction/",
+        newTransaction
+      );
+    }
 
     console.log(result);
   };
@@ -93,11 +94,23 @@ export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
         newValue = { type: inputValue };
         break;
     }
-
+    console.log(newValue);
     setNewTransaction({ ...newTransaction, ...newValue });
   };
 
   React.useEffect(() => {
+    if (isEdit && edit) {
+      setNewTransaction(editTransaction);
+      setEdit(false);
+      setRadioDisable(true);
+      if (editTransaction.type === "-") {
+        setSelectedOption("expense");
+      } else {
+        setSelectedOption("profit");
+      }
+      console.log(editTransaction);
+    }
+
     const calendar = () => {
       let elems = document.querySelectorAll(".datepicker");
       let instances = M.Datepicker.init(elems, {
@@ -143,6 +156,7 @@ export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
                   value="-"
                   checked={selectedOption === "expense"}
                   onChange={handleChange}
+                  disabled={radioDisable}
                 />
                 <span style={customStyles.span}>Despesa</span>
               </label>
@@ -154,6 +168,7 @@ export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
                   value="+"
                   checked={selectedOption === "profit"}
                   onChange={handleChange}
+                  disabled={radioDisable}
                 />
                 <span style={customStyles.span}>Receita</span>
               </label>
