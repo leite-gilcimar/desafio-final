@@ -77,6 +77,7 @@ export default function App() {
 
   const handleCloseNewTransaction = () => {
     setIsModalOpen(false);
+    setIsEdit(false);
   };
 
   const handlePersist = (transaction) => {
@@ -96,6 +97,7 @@ export default function App() {
       return a._id.localeCompare(b._id);
     });
     setFilteredTransactions(newFilteredTransactions);
+    setIsEdit(false);
   };
 
   return (
