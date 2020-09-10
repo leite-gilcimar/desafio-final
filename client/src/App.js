@@ -14,6 +14,8 @@ export default function App() {
   const [balance, setBalance] = React.useState(0);
   const [filteredTransactions, setFilteredTransactions] = React.useState([]);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isEdit, setIsEdit] = React.useState(false);
+  const [editTransaction, setEditTransaction] = React.useState([]);
 
   React.useEffect(() => {
     const getTransactions = async () => {
@@ -77,6 +79,12 @@ export default function App() {
     setIsModalOpen(false);
   };
 
+  const handlePersist = (transaction) => {
+    setEditTransaction(transaction);
+    setIsEdit(true);
+    setIsModalOpen(true);
+  };
+
   return (
     <div>
       <div className="container">
@@ -93,9 +101,14 @@ export default function App() {
           balance={balance}
           lengthTransaction={lengthTransaction}
           transactions={filteredTransactions}
+          onPersist={handlePersist}
         />
         {isModalOpen && (
-          <ModalTransaction onClose={handleCloseNewTransaction} />
+          <ModalTransaction
+            editTransaction={editTransaction}
+            isEdit={isEdit}
+            onClose={handleCloseNewTransaction}
+          />
         )}
       </div>
     </div>

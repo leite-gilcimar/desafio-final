@@ -5,7 +5,20 @@ import axios from "axios";
 
 Modal.setAppElement("#root");
 
-export default function ModalTransaction({ onClose }) {
+export default function ModalTransaction({ editTransaction, isEdit, onClose }) {
+  const {
+    _id,
+    description,
+    value,
+    category,
+    year,
+    month,
+    day,
+    yearMonth,
+    yearMonthDay,
+    type,
+  } = editTransaction;
+
   const initTransaction = {
     _id: null,
     description: "",
@@ -22,7 +35,18 @@ export default function ModalTransaction({ onClose }) {
   const [selectedOption, setSelectedOption] = React.useState("despesa");
   const [newTransaction, setNewTransaction] = React.useState(initTransaction);
 
+  // if (isEdit) {
+  //   setNewTransaction(editTransaction);
+
+  //   console.log(editTransaction);
+  // }
+
   const handleFormSubmit = async (event) => {
+    // if (isEdit) {
+    //   newTransaction._id = _id;
+    //   console.log(_id);
+    // }
+
     event.preventDefault();
     const result = await axios.post(
       "http://localhost:3001/api/transaction/",
@@ -140,6 +164,7 @@ export default function ModalTransaction({ onClose }) {
                 type="text"
                 name="description"
                 onChange={handleChange}
+                value={description}
               ></input>
             </div>
             <div>
@@ -148,12 +173,24 @@ export default function ModalTransaction({ onClose }) {
                 type="text"
                 name="category"
                 onChange={handleChange}
+                value={category}
               ></input>
             </div>
             <div>
               <span>Valor:</span>
-              <input type="Number" name="value" onChange={handleChange}></input>
-              <input type="date" name="date" onChange={handleChange} />
+              <input
+                type="Number"
+                name="value"
+                min="0"
+                onChange={handleChange}
+                value={value}
+              ></input>
+              <input
+                type="date"
+                name="date"
+                onChange={handleChange}
+                value={yearMonthDay}
+              />
             </div>
           </form>
           <button

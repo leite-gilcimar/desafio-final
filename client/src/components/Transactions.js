@@ -1,4 +1,5 @@
 import React from "react";
+import Action from "./Action";
 
 export default function Transactions({
   transactions,
@@ -6,8 +7,17 @@ export default function Transactions({
   profit,
   expense,
   balance,
+  onPersist,
 }) {
   console.log(transactions);
+
+  const handleActionClick = (id, type) => {
+    const findTransaction = transactions.find((transaction) => {
+      return transaction._id === id;
+    });
+    onPersist(findTransaction);
+    //console.log(findTransaction);
+  };
 
   return (
     <div>
@@ -70,12 +80,11 @@ export default function Transactions({
                     <td>{description}</td>
                     <td>R$ {value.toFixed(2)}</td>
                     <td>
-                      <span
-                        className="material-icons"
-                        style={{ cursor: "pointer" }}
-                      >
-                        edit
-                      </span>
+                      <Action
+                        onActionClick={handleActionClick}
+                        id={_id}
+                        type="edit"
+                      />
                     </td>
                     <td>
                       <span
