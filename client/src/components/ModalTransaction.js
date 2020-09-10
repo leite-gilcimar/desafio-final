@@ -1,16 +1,35 @@
 import React from "react";
 import Modal from "react-modal";
 import M from "materialize-css/dist/js/materialize";
+import axios from "axios";
 
 Modal.setAppElement("#root");
 
 export default function ModalTransaction({ onClose }) {
-  const [selectedOption, setSelectedOption] = React.useState("despesa");
-  const [newTransaction, setNewTransaction] = React.useState([]);
+  const initTransaction = {
+    _id: null,
+    description: "",
+    value: "",
+    category: "",
+    year: "",
+    month: "",
+    day: "",
+    yearMonth: "",
+    yearMonthDay: "",
+    type: "",
+  };
 
-  const handleFormSubmit = (event) => {
+  const [selectedOption, setSelectedOption] = React.useState("despesa");
+  const [newTransaction, setNewTransaction] = React.useState(initTransaction);
+
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(newTransaction);
+    const result = await axios.post(
+      "http://localhost:3001/api/transaction/",
+      newTransaction
+    );
+
+    console.log(result);
   };
 
   const handleChange = (event) => {
@@ -34,6 +53,8 @@ export default function ModalTransaction({ onClose }) {
         console.log(inputValue);
         let date = inputValue.split("-");
         newValue = {
+          day: `${date[2]}`,
+          month: `${date[1]}`,
           year: `${date[0]}`,
           yearMonth: `${date[0]}-${date[1]}`,
           yearMonthDay: `${date[0]}-${date[1]}-${date[2]}`,
@@ -48,8 +69,8 @@ export default function ModalTransaction({ onClose }) {
         newValue = { type: inputValue };
         break;
     }
-    newObject = Object.assign(newTransaction, newValue);
-    setNewTransaction(newObject);
+
+    setNewTransaction({ ...newTransaction, ...newValue });
   };
 
   React.useEffect(() => {
