@@ -25,6 +25,10 @@ export default function App() {
       const { data } = result;
       const { length, transactions } = data;
 
+      transactions.sort((a, b) => {
+        return Number(a.day) - Number(b.day);
+      });
+
       setTransactions(transactions);
       setLengthTransaction(length);
       setFilteredTransactions(Object.assign([], transactions));
@@ -37,18 +41,22 @@ export default function App() {
   React.useEffect(() => {
     const profit = filteredTransactions.reduce((accumulator, currentItem) => {
       if (currentItem.type === "+") {
-        accumulator = accumulator + currentItem.value;
+        accumulator = accumulator + Number(currentItem.value);
       }
       return accumulator;
     }, 0);
     const balance = filteredTransactions.reduce((accumulator, currentItem) => {
       if (currentItem.type === "-") {
-        accumulator -= currentItem.value;
+        accumulator -= Number(currentItem.value);
       }
       return accumulator;
     }, profit);
 
     const expense = balance - profit;
+
+    console.log(
+      `lancamento: ${filteredTransactions.length} receitas: ${balance}`
+    );
 
     setProfit(profit);
     setExpense(expense);
@@ -110,7 +118,8 @@ export default function App() {
       newFilteredTransactions.push(transaction);
     }
     newFilteredTransactions.sort((a, b) => {
-      return a._id.localeCompare(b._id);
+      return Number(a.day) - Number(b.day);
+      //return a._id.localeCompare(b._id);
     });
     setFilteredTransactions(newFilteredTransactions);
   };

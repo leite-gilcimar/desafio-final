@@ -1,6 +1,5 @@
 import React from "react";
 import Modal from "react-modal";
-import M from "materialize-css/dist/js/materialize";
 import axios from "axios";
 
 Modal.setAppElement("#root");
@@ -52,15 +51,18 @@ export default function ModalTransaction({
         `http://localhost:3001/api/transaction/${newTransaction._id}`,
         newTransaction
       );
+      handleDataTransactions(newTransaction);
     } else {
       result = await axios.post(
         "http://localhost:3001/api/transaction/",
         newTransaction
       );
+      const { data } = result;
+      console.log(data);
+      handleDataTransactions(data);
     }
-    console.log(result);
+
     onClose();
-    handleDataTransactions(newTransaction);
   };
 
   const handleChange = (event) => {
@@ -116,15 +118,9 @@ export default function ModalTransaction({
       }
       console.log(editTransaction);
     }
+  }, [newTransaction, isEdit, edit, editTransaction]);
 
-    const calendar = () => {
-      let elems = document.querySelectorAll(".datepicker");
-      let instances = M.Datepicker.init(elems, {
-        format: "yyyy-mm-dd",
-      });
-      console.log(instances);
-    };
-    //calendar();
+  React.useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
