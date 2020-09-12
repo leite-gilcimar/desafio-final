@@ -28,18 +28,7 @@ export default function ModalTransaction({
   const [edit, setEdit] = React.useState(true);
   const [radioDisable, setRadioDisable] = React.useState(false);
 
-  const {
-    _id,
-    description,
-    value,
-    category,
-    year,
-    month,
-    day,
-    yearMonth,
-    yearMonthDay,
-    type,
-  } = newTransaction;
+  const { description, value, category, yearMonthDay } = newTransaction;
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -58,7 +47,7 @@ export default function ModalTransaction({
         newTransaction
       );
       const { data } = result;
-      console.log(data);
+      //console.log(data);
       handleDataTransactions(data);
     }
 
@@ -69,7 +58,6 @@ export default function ModalTransaction({
     const name = event.target.name;
     const inputValue = event.target.value;
 
-    let newObject = null;
     let newValue = null;
 
     switch (name) {
@@ -101,8 +89,9 @@ export default function ModalTransaction({
         setSelectedOption(name);
         newValue = { type: inputValue };
         break;
+      default:
+        console.log("Valor invalido: " + name + " " + inputValue);
     }
-    console.log(newValue);
     setNewTransaction({ ...newTransaction, ...newValue });
   };
 
@@ -116,7 +105,7 @@ export default function ModalTransaction({
       } else {
         setSelectedOption("profit");
       }
-      console.log(editTransaction);
+      //console.log(editTransaction);
     }
   }, [newTransaction, isEdit, edit, editTransaction]);
 

@@ -54,9 +54,9 @@ export default function App() {
 
     const expense = balance - profit;
 
-    console.log(
-      `lancamento: ${filteredTransactions.length} receitas: ${balance}`
-    );
+    // console.log(
+    //   `lancamento: ${filteredTransactions.length} receitas: ${balance}`
+    // );
 
     setProfit(profit);
     setExpense(expense);
@@ -100,12 +100,12 @@ export default function App() {
   };
 
   const handleDelete = async (transaction) => {
-    const result = await axios.delete(
+    await axios.delete(
       `http://localhost:3001/api/transaction/${transaction._id}`
     );
 
     handleOrganizeTransaction(transaction, "delete");
-    console.log(result);
+    //console.log(result);
   };
 
   const handleOrganizeTransaction = (transaction, action) => {
@@ -129,7 +129,7 @@ export default function App() {
       <div className="container">
         <h1 className="center">Desafio Final do Bootcamp Full Stack</h1>
         <h4 className="center">Controle Financeiro Pessoal</h4>
-        <Months period={handleSetPeriod} />
+        <Months period={period} setPeriod={handleSetPeriod} />
         <NewTransaction
           handleFilter={handleFilterInput}
           handleNewTransaction={handleNewTransaction}
@@ -155,10 +155,3 @@ export default function App() {
     </div>
   );
 }
-
-const styles = {
-  rows: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-};

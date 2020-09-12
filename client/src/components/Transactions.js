@@ -10,10 +10,10 @@ export default function Transactions({
   onPersist,
   onDelete,
 }) {
-  console.log(transactions);
+  //console.log(transactions);
 
   const handleActionClick = (id, type) => {
-    console.log("Type: " + type);
+    //console.log("Type: " + type);
     const findTransaction = transactions.find((transaction) => {
       return transaction._id === id;
     });
