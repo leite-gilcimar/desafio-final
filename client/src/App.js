@@ -79,7 +79,7 @@ export default function App() {
     setFilteredTransactions(filtered);
   };
 
-  const handleNewTransaction = (transaction) => {
+  const handleNewTransaction = () => {
     setIsModalOpen(true);
   };
 
@@ -121,6 +121,7 @@ export default function App() {
       return Number(a.day) - Number(b.day);
       //return a._id.localeCompare(b._id);
     });
+    setTransactions(newFilteredTransactions);
     setFilteredTransactions(newFilteredTransactions);
   };
 

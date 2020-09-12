@@ -6,8 +6,7 @@ export default function NewTransaction({ handleFilter, handleNewTransaction }) {
   };
 
   const handleClick = () => {
-    console.log("click");
-    handleNewTransaction("opa");
+    handleNewTransaction();
   };
 
   return (

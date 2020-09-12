@@ -71,7 +71,6 @@ export default function ModalTransaction({
         newValue = { value: inputValue };
         break;
       case "date":
-        console.log(inputValue);
         let date = inputValue.split("-");
         newValue = {
           day: `${date[2]}`,
