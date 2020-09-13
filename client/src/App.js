@@ -32,10 +32,8 @@ export default function App() {
       setTransactions(transactions);
       setLengthTransaction(length);
       setFilteredTransactions(Object.assign([], transactions));
-      setPeriod(period);
     };
     getTransactions();
-    //console.log(transactions);
   }, [period]);
 
   React.useEffect(() => {
@@ -62,7 +60,7 @@ export default function App() {
     setExpense(expense);
     setBalance(balance);
     setLengthTransaction(filteredTransactions.length);
-  }, [filteredTransactions]);
+  }, [filteredTransactions, transactions]);
 
   const handleSetPeriod = (value) => {
     setPeriod(value);
